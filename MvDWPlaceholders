@@ -1,0 +1,6 @@
+{clans.clan} Returns player's clan
+{clans.lvl} Returns player's clan level
+{clans.slots} Returns player's clan slots
+{clans.kills} Returns player's clan kills
+{clans.deaths} Returns player's clan deaths
+{clans.kdr} Returns player's clan kdr
