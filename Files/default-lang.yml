@@ -1,0 +1,114 @@
+global:
+  prefix: '&8[&4&lCLANS&r&8] &r'
+  only_players: '&cOnly for players!'
+  no_clan: '&cYou need to be in a clan to use this command!'
+  rank: '&cYou need to be mod or owner of the clan to use this command!'
+  owner: '&cYou need to be owner of the clan to use this command!'
+  no_exist: '&cThis clan doesn''t exist!'
+  perms: '&cYou don''t have permissions!'
+  negative: '&cThis number can''t be negative or 0!'
+help:
+  commands: "&8&l\xbb&r &9&lCommands:&r"
+  help_cmd: "&8&l\xbb&r &b/clan help &7Show all clan commands."
+  create_cmd: "&8&l\xbb&r &b/clan create <clan> &7Create a clan."
+  join_cmd: "&8&l\xbb&r &b/clan join <clan> &7Join a clan."
+  invite_cmd: "&8&l\xbb&r &b/clan invite <player> &7Invite a player to join your clan."
+  kick_cmd: "&8&l\xbb&r &b/clan kick <player> &7Kick a player from your clan."
+  info_cmd: "&8&l\xbb&r &b/clan info <clan> &7Show info of a clan."
+  list_cmd: "&8&l\xbb&r &b/clan list &7List of all clans."
+  chat_cmd: "&8&l\xbb&r &b/clan chat &7Changes your chat mode."
+  mode_cmd: "&8&l\xbb&r &b/clan mode &7Changes the join mode of the clan."
+  promote_cmd: "&8&l\xbb&r &b/clan promote &7Promotes a member of the clan."
+  demote_cmd: "&8&l\xbb&r &b/clan demote &7Demotes a mod of the clan."
+  pvp_cmd: "&8&l\xbb&r &b/clan pvp &7Changes clan pvp mode."
+ahelp:
+  commands: "&8&l\xbb&r &9&lCommands:&r"
+  help_cmd: "&8&l\xbb&r &b/aclan help &7Show all admin commands."
+  slots_cmd: "&8&l\xbb&r &b/aclan slots <set/default/add/remove> <int> &7Modify a\
+    \ clans slots."
+  level_cmd: "&8&l\xbb&r &b/aclan level <> <int> &7Modify a clans level."
+  exp_cmd: "&8&l\xbb&r &b/aclan exp <> <int> &7Modify a clans exp."
+  erase_cmd: "&8&l\xbb&r &b/aclan erase <clan> &7Remove a clan."
+  reload_cmd: "&8&l\xbb&r &b/aclan reload &7Reload plugin files."
+create:
+  usage: '&7Correct usage: /clan create <clan>'
+  created: '&f%player% &7has created the clan: &c%clan%'
+  no_money: '&cYou don''t have money to create a clan!'
+  long: '&cThe name of the clan is too long!'
+  short: '&cThe name of the clan is too short!'
+  exist: '&cThis clan is already created!'
+  has_clan: '&cYou''re already a member from other clan!'
+join:
+  usage: '&7Correct usage: /clan join <clan>'
+  joined: '&7You have joined: &b%clan%'
+  invitation: '&cYou need an invitation to join this clan!'
+  full: '&cThis clan is full!'
+  has_clan: '&cYou''re already a member from other clan!'
+invite:
+  usage: '&7Correct usage: /clan invite <user>'
+  invited: '&7You have invited &b%player% &7to your clan!'
+  been_invited: '&7You have been invited to clan: &b%clan%'
+  has_clan: '&cThis player is already in a clan!'
+  offline: '&cThat player is not online!'
+info:
+  usage: '&7Correct usage: /clan info <clan>'
+pvp:
+  enabled: '&7PvP Mode: &6Enabled!'
+  disabled: '&7PvP Mode: &cDisabled!'
+leave:
+  left: '&cYou have left your clan!'
+kick:
+  usage: '&7Correct usage: /clan kick <user>'
+  kicked: '&7You have kick &b%player% &7out of your clan!'
+  yourself: '&cYou can''t kick yourself!'
+  no_member: '&cThis player is not in your clan!'
+promote:
+  usage: '&7Correct usage: /clan promote <user>'
+  mod: '&cThat player is already a mod of your clan!'
+  promoted: '&7That player is now a mod of your clan!'
+  no_member: '&cThat player is not in your clan!'
+demote:
+  usage: '&7Correct usage: /clan demote <user>'
+  no_mod: '&cThat player is not a mod of your clan!'
+  demoted: '&7That player is now a member of your clan!'
+  no_member: '&cThat player is not in your clan!'
+mode:
+  inv: '&7Clan Mode: &cInvitation!'
+  free: '&7Clan Mode: &6Free!'
+chat:
+  enabled: '&7Clan chat: &6Enabled!'
+  disabled: '&7Clan chat: &cDisabled!'
+event:
+  pvp:
+    same_clan: '&b%player% &7is a member of your clan!'
+    levelup: '&c%clan% &7has reached level &b%level%&7!'
+admin:
+  slots:
+    usage: '&7Correct usage: /aclan slots <clan> <set/default/add/remove> <int>!'
+    no_exist: '&cThat clan doesn''t exist!'
+    less_default: '&cSlots can''t be less than default slots number!'
+    int: '&cArgument 3 must be an integer!'
+    set: '&7Slots of clan &b%clan% &7are now &c%slots%&7!'
+    default: '&7Slots of clan &b%clan% &7are now the defaults!'
+    add: '&c%slots% &7slots have been added to clan &b%clan%&7!'
+    remove: '&c%slots% &7slots have been removed from clan &b%clan%&7!'
+  level:
+    usage: '&7Correct usage: /aclan level <clan> <set/reset/add/remove> <int>!'
+    no_exist: '&cThat clan doesn''t exist!'
+    less: '&cClan level can''t be less than 1!'
+    set: Nearly!
+    reset: Nearly!
+    add: Nearly!
+    remove: Nearly!
+  exp:
+    usage: '&7Correct usage: /aclan exp <clan> <set/reset/add/remove> <int>!'
+    no_exist: '&cThat clan doesn''t exist!'
+    less: '&cClan exp can''t be less than 0!'
+    set: Nearly!
+    reset: Nearly!
+    add: Nearly!
+    remove: Nearly!
+  erase:
+    usage: '&7Correct usage: /aclan erase <clan>'
+    no_exist: '&cThat clan doesn''t exist!'
+    erased: '&7You''ve deleted the clan: &b%clan%&7!'
