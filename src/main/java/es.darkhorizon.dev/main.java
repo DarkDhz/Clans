@@ -20,9 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import be.maximvdw.placeholderapi.PlaceholderAPI;
-import be.maximvdw.placeholderapi.PlaceholderReplacer;
-import be.maximvdw.placeholderapi.PlaceholderReplaceEvent;
 
 import net.milkbowl.vault.economy.Economy;
 
@@ -74,7 +71,7 @@ public class main extends JavaPlugin implements Listener{
 		try {
 			URL url = new URL("http://149.56.99.114/clans/link.yml");
 			URLConnection conn = url.openConnection();
-			BufferedReader br = new BufferedReader(                               new InputStreamReader(conn.getInputStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String inputLine;
 			File file = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "link.yml");
 			if (!file.exists()) {file.createNewFile();}
@@ -372,8 +369,7 @@ public class main extends JavaPlugin implements Listener{
 		
 		this.invmenu = new menus(this);
 		
-		super.onEnable();
-		if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
+		/*if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
 			PlaceholderAPI.registerPlaceholder(this, "clans.clan",
 					new PlaceholderReplacer() {
 						public String onPlaceholderReplace(
@@ -385,7 +381,7 @@ public class main extends JavaPlugin implements Listener{
 							return plugin.pclans.get(player.getName().toString());
 						}
 					});
-		}
+		}*/
 		
 	}
 
