@@ -1,0 +1,74 @@
+info:
+  title: '&4&LCLAN'
+  members:
+    name: '&a&LMembers &8[&c%members%&7/&c%slots%&8]'
+    lore:
+    - '&8'
+    - '&7Click to view the list!'
+    - '&8'
+  lvl:
+    name: '&6&LLevel &8[&c%level%&r&8]'
+    lore:
+    - '&8'
+    - '&7Exp: &c%exp%&7/&c%lvlup%'
+    - '&8'
+  stats:
+    name: '&c&LStats'
+    lore:
+    - '&8'
+    - '&7Kills: &c%kills%'
+    - '&7Death: &c%deaths%'
+    - '&7KDR: &c%kdr%'
+    - '&8'
+members:
+  title: '&4&LMEMBERS'
+  status:
+    online: '&eOnline'
+    offline: '&cOffline'
+  back:
+    name: '&c&LBack'
+    lore:
+    - '&8'
+    - '&7Click to return to clan info!'
+    - '&8'
+  panel:
+    name: '&f&LClan Members'
+    lore:
+    - '&8'
+    - '&7Seeing Clan members!'
+    - '&8'
+  member:
+    name: '&a&L%member%'
+    lore:
+    - '&8'
+    - '&7Status: %status%'
+    - '&8'
+list:
+  title: '&4&LCLANS&e&l'
+  next_pg:
+    name: "&f&L\xbb"
+    lore:
+    - '&8'
+    - '&7Click to go to the next page!'
+    - '&8'
+  return_pg:
+    name: "&f&L\xab"
+    lore:
+    - '&8'
+    - '&7Click to go back to another page!'
+    - '&8'
+  clan:
+    name: Nearly!
+    lore:
+    - '&8'
+    - '&7Click to view more info!'
+    - '&8'
+  none:
+    name: '&cClan not Found'
+    lore:
+    - '&8'
+    - '&7If you want to create a clan'
+    - '&7use this command: &b&l/clan create <clan>'
+    - '&8'
+    - '&eCost: &f%cost%'
+    - '&8'
