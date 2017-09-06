@@ -1,0 +1,48 @@
+main: es.darkhorizon.dev.main
+name: Clans
+version: 2.0.1
+author: DarkDhz
+description: A simple Clans plugin.
+depend: [Vault]
+commands:
+  clan:
+    description: Clans commands for users.
+    usage: /<command> [String]
+    permission: clan.user.use
+    permission-message: You don't have <permission>
+  aclan:
+    description: Clans commands for admins.
+    usage: /<command> [player]
+    permission: clan.admin.use
+    permission-message: You don't have <permission>   
+permissions:  
+  clans.user.*:
+    description: Gives access to all user commands
+    children:
+      clan.user.use: true
+      clan.user.create: true
+      clan.user.join: true 
+      clan.user.list: true 
+      clan.user.invite: true 
+      clan.user.info: true 
+      clan.user.pvp: true   
+      clan.user.leave: true 
+      clan.user.kick: true 
+      clan.user.promote: true 
+      clan.user.demote: true 
+      clan.user.mode: true 
+      clan.user.chat: true 
+  clans.admin.use:
+    default: op
+  clan.admin.reload:
+    default: op
+  clan.admin.plstats:
+    default: op  
+  clan.admin.slots:
+    default: op 
+  clan.admin.level:
+    default: op 
+  clan.admin.exp:
+    default: op   
+  clan.admin.erase:
+    default: op   
