@@ -1,9 +1,10 @@
 main: es.darkhorizon.dev.main
 name: Clans
-version: 2.0.1
+version: 2.1
 author: DarkDhz
 description: A simple Clans plugin.
 depend: [Vault]
+softdepends: [MVdWPlaceholderAPI]
 commands:
   clan:
     description: Clans commands for users.
