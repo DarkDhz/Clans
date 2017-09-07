@@ -30,7 +30,7 @@ public class main extends JavaPlugin implements Listener{
 	ArrayList<String> Chat = new ArrayList<String>();
 	HashMap<String, String> pclans = new HashMap<String, String>();
 	HashMap<String, String> Invites = new HashMap<String, String>();
-	String plversion = "2.1";
+	String plversion = "2.1.1";
 	public static main getPlugin() {return plugin;}
 	@Override
 	public void onEnable() {
