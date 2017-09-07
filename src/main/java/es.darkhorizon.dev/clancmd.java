@@ -299,7 +299,7 @@ public class clancmd implements CommandExecutor{
 									} else {
 										Player target = Bukkit.getServer().getPlayer(args[1]);
 										if (plugin.pclans.get(target.getName().toString()).equals(clan)) {
-											if ((plugin.getConfig().get("mod." + target.getName()).equals(true))) {
+											if ((plugin.getConfig().get("mod." + target.getName()) != null)) {
 												p.sendMessage(prefix + lfile.getString("promote.mod").replaceAll("&", "§"));											
 											} else {
 												plugin.getConfig().set("mod." + target.getName(), true);
@@ -323,7 +323,7 @@ public class clancmd implements CommandExecutor{
 									} else {
 										Player target = Bukkit.getServer().getPlayer(args[1]);
 										if (plugin.pclans.get(target.getName().toString()).equals(clan)) {
-											if (!(plugin.getConfig().get("mod." + target.getName()).equals(true))) {
+											if (!(plugin.getConfig().get("mod." + target.getName()) != null)) {
 												p.sendMessage(prefix + lfile.getString("demote.no_mod").replaceAll("&", "§"));
 											} else {
 												plugin.getConfig().set("mod." + target.getName(), null);
@@ -382,4 +382,3 @@ public class clancmd implements CommandExecutor{
 		return true;
 	}			
 }
-
