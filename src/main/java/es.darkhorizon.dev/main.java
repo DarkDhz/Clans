@@ -16,7 +16,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,7 +30,7 @@ public class main extends JavaPlugin implements Listener{
 	ArrayList<String> Chat = new ArrayList<String>();
 	HashMap<String, String> pclans = new HashMap<String, String>();
 	HashMap<String, String> Invites = new HashMap<String, String>();
-	String plversion = "2.0.1";
+	String plversion = "2.1";
 	public static main getPlugin() {return plugin;}
 	@Override
 	public void onEnable() {
@@ -46,6 +45,9 @@ public class main extends JavaPlugin implements Listener{
 		Bukkit.getPluginManager().registerEvents(new event(this), this);
 		Bukkit.getPluginCommand("clan").setExecutor(new clancmd(this));
 		Bukkit.getPluginCommand("aclan").setExecutor(new aclancmd(this));	
+		if (Bukkit.getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
+			Bukkit.getPluginManager().registerEvents(new placeholders(this), this);
+		}
 		Bukkit.getPluginManager().registerEvents(this, this);
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();	
 		getConfig().set("version", plversion);
@@ -92,6 +94,8 @@ public class main extends JavaPlugin implements Listener{
 			console.sendMessage("§8§l§m===========================================================================");
 			console.sendMessage("");
 			console.sendMessage("§8[§4§lCLANS§r§8] §7You're running the Version §b§l" + plversion + "§r §7of Clans!");	
+			if (Bukkit.getServer().getPluginManager().isPluginEnabled("Vault")) {console.sendMessage("§8[§4§lCLANS§r§8] §7Plugin linked with §eVault§r§7!");}
+			if (Bukkit.getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {console.sendMessage("§8[§4§lCLANS§r§8] §7Plugin linked with §eMVdWPlaceholderAPI§r§7!");}		
 			console.sendMessage("");
 			console.sendMessage("§8§l§m===========================================================================");			
 		} else {
