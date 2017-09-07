@@ -1,0 +1,9 @@
+Placeholders for MvDWPlaceholdersAPI:
+
+{clans.clan} Return player's Clan
+{clans.level} Return player's Clan Level
+{clans.slots} Return player's Clan Slots
+{clans.owner} Return player's Clan Owner
+{clans.kills} Return player's Clan Kills
+{clans.deaths} Return player's Clan Deaths
+{clans.kdr} Return player's Clan KDR
