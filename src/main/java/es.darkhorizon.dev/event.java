@@ -129,9 +129,9 @@ public class event implements Listener {
 				String clan = plugin.pclans.get(event.getPlayer().getName().toString());				
 				if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(event.getPlayer().getName())) {
 					event.getPlayer().setDisplayName(sfile.getString("chat.format").replaceAll("&", "§").replaceAll("%clan%", clan).replaceAll("%rank%", sfile.getString("chat.owner_prefix").replaceAll("&", "§")) + event.getPlayer().getDisplayName());
-				} else if ((plugin.getConfig().get("mod." + p.getName()).equals(true))) {
+				} else if ((plugin.getConfig().get("mod." + p.getName()) != null)) {
 					event.getPlayer().setDisplayName(sfile.getString("chat.format").replaceAll("&", "§").replaceAll("%clan%", clan).replaceAll("%rank%", sfile.getString("chat.mod_prefix").replaceAll("&", "§")) + event.getPlayer().getDisplayName());
-				} else { event.getPlayer().setDisplayName(sfile.getString("chat.format").replaceAll("&", "§").replaceAll("%clan%", clan).replaceAll("%rank%", "") + event.getPlayer().getDisplayName()); }						
+				} else { event.getPlayer().setDisplayName(sfile.getString("chat.format").replaceAll("&", "§").replaceAll("%clan%", clan).replaceAll("%rank%", "§r") + event.getPlayer().getDisplayName()); }						
 			}	
 		} else {
 			event.setCancelled(true);
