@@ -30,7 +30,7 @@ public class main extends JavaPlugin implements Listener{
 	ArrayList<String> Chat = new ArrayList<String>();
 	HashMap<String, String> pclans = new HashMap<String, String>();
 	HashMap<String, String> Invites = new HashMap<String, String>();
-	String plversion = "2.1.2";
+	String plversion = "2.2";
 	public static main getPlugin() {return plugin;}
 	@Override
 	public void onEnable() {
@@ -45,14 +45,16 @@ public class main extends JavaPlugin implements Listener{
 		Bukkit.getPluginManager().registerEvents(new event(this), this);
 		Bukkit.getPluginCommand("clan").setExecutor(new clancmd(this));
 		Bukkit.getPluginCommand("aclan").setExecutor(new aclancmd(this));	
-		if (Bukkit.getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
-			Bukkit.getPluginManager().registerEvents(new placeholders(this), this);
-		}
+		if (Bukkit.getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {Bukkit.getPluginManager().registerEvents(new placeholders(this), this);}
 		Bukkit.getPluginManager().registerEvents(this, this);
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();	
 		getConfig().set("version", plversion);
-		saveConfig();
-		reloadConfig();	
+		File l = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "lang.yml");	
+		FileConfiguration lfile = YamlConfiguration.loadConfiguration(l);
+		File s = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "settings.yml");	
+		FileConfiguration sfile = YamlConfiguration.loadConfiguration(s);
+		File g = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "gui.yml");	
+		FileConfiguration gfile = YamlConfiguration.loadConfiguration(g);
 		
 		//UPDATER
 		
@@ -97,7 +99,7 @@ public class main extends JavaPlugin implements Listener{
 			if (Bukkit.getServer().getPluginManager().isPluginEnabled("Vault")) {console.sendMessage("§8[§4§lCLANS§r§8] §7Plugin linked with §eVault§r§7!");}
 			if (Bukkit.getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {console.sendMessage("§8[§4§lCLANS§r§8] §7Plugin linked with §eMVdWPlaceholderAPI§r§7!");}		
 			console.sendMessage("");
-			console.sendMessage("§8§l§m===========================================================================");			
+			console.sendMessage("§8§l§m===========================================================================");											
 		} else {
 			console.sendMessage("§8§l§m===========================================================================");
 			console.sendMessage("");
@@ -107,13 +109,23 @@ public class main extends JavaPlugin implements Listener{
 			console.sendMessage("");
 			console.sendMessage("§8§l§m===========================================================================");		
 		}	
-		try{if(u.delete()){}else{}}catch(Exception e){e.printStackTrace(); }
-		try{if(lk.delete()){}else{}}catch(Exception e){e.printStackTrace(); }
+		try{if(u.delete()){}else{}}catch(Exception e){e.printStackTrace();}
+		try{if(lk.delete()){}else{}}catch(Exception e){e.printStackTrace();}
+		
+		if (this.getConfig().getString("bases_enabled") == null) {this.getConfig().set("bases_enabled", true);}
+		//lfile
+		if (lfile.getString("help.setbase_cmd") == null) {lfile.set("help.setbase_cmd", "&8&l»&r &b/clan setbase &7Sets the Clan base at your Location.");}
+		if (lfile.getString("help.delbase_cmd") == null) {lfile.set("help.delbase_cmd", "&8&l»&r &b/clan delbase &7Removes the Clan base.");}
+		if (lfile.getString("help.base_cmd") == null) {lfile.set("help.base_cmd", "&8&l»&r &b/clan base &7Teleports you to the Clan base.");}
+		if (lfile.getString("global.disabled") == null) {lfile.set("global.disabled", "&cThis is not enabled.");}
+		if (lfile.getString("base.set") == null) {lfile.set("base.set", "&7You have set the Clan base to your location.");}
+		if (lfile.getString("base.unset") == null) {lfile.set("base.unset", "&7You have removed the Clan base.");}
+		if (lfile.getString("base.no_base") == null) {lfile.set("base.no_base", "&cThe Clan does not have base.");}
+		if (lfile.getString("base.tp") == null) {lfile.set("base.no_base", "&cYou have been teleported to the Clan base.");}
+		try {lfile.save(l);} catch (IOException exception) {exception.printStackTrace();} 
 		
 		//-UPDATER
-		
-		File l = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "lang.yml");	
-		FileConfiguration lfile = YamlConfiguration.loadConfiguration(l);
+				
 		if (!l.exists()) { try {
 
 				lfile.createSection("global");
@@ -246,9 +258,7 @@ public class main extends JavaPlugin implements Listener{
                 
 				lfile.save(l);			
 			} catch (IOException exception) { exception.printStackTrace(); } }
-		
-		File s = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "settings.yml");	
-		FileConfiguration sfile = YamlConfiguration.loadConfiguration(s);
+			
 		if (!s.exists()) { try {
 			
 				sfile.set("cost", 100000.00);
@@ -264,8 +274,6 @@ public class main extends JavaPlugin implements Listener{
 				sfile.save(s);					
 		} catch (IOException exception) { exception.printStackTrace(); } }  
 		
-		File g = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "gui.yml");	
-		FileConfiguration gfile = YamlConfiguration.loadConfiguration(g);
 		if (!g.exists()) { try {
 				ArrayList<String> Lore = new ArrayList<String>();
 				
@@ -372,43 +380,16 @@ public class main extends JavaPlugin implements Listener{
 			} catch (IOException exception) { exception.printStackTrace(); } }  
 		
 		this.invmenu = new menus(this);
-		
-		/*if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
-			PlaceholderAPI.registerPlaceholder(this, "clans.clan",
-					new PlaceholderReplacer() {
-						public String onPlaceholderReplace(
-								PlaceholderReplaceEvent event) {
-							Player player = event.getPlayer();
-							if (plugin.pclans.get(player.getName().toString()) == null) {
-								return "No Clan!";
-							}
-							return plugin.pclans.get(player.getName().toString());
-						}
-					});
-		}*/
-		
+		saveConfig();
+		reloadConfig();					
 	}
-
 	@Override
-	public void onDisable() {
-		getLogger().info("[CLANS] Plugin Disabled!");
-	}
-	
-	public static Economy getEconomy() {
-		return economy;
-	}
-	
-	private boolean setupEconomy()
-    {
+	public void onDisable() {getLogger().info("[CLANS] Plugin Disabled!");}	
+	public static Economy getEconomy() {return economy;}
+	private boolean setupEconomy() {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-        if (economyProvider != null) {
-            economy = economyProvider.getProvider();
-        }
-
+        if (economyProvider != null) {economy = economyProvider.getProvider();}
         return (economy != null);
-    }
-	
-	public menus getInvMenus() {
-		return this.invmenu; 
-	}
+    }	
+	public menus getInvMenus() {return this.invmenu;}
 }
