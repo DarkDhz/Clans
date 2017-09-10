@@ -7,6 +7,7 @@ global:
   no_exist: '&cThis clan doesn''t exist!'
   perms: '&cYou don''t have permissions!'
   negative: '&cThis number can''t be negative or 0!'
+  disabled: '&cThis is not enabled.'
 help:
   commands: "&8&l\xbb&r &9&lCommands:&r"
   help_cmd: "&8&l\xbb&r &b/clan help &7Show all clan commands."
@@ -21,6 +22,9 @@ help:
   promote_cmd: "&8&l\xbb&r &b/clan promote &7Promotes a member of the clan."
   demote_cmd: "&8&l\xbb&r &b/clan demote &7Demotes a mod of the clan."
   pvp_cmd: "&8&l\xbb&r &b/clan pvp &7Changes clan pvp mode."
+  setbase_cmd: "&8&l\xbb&r &b/clan setbase &7Sets the Clan base at your Location."
+  delbase_cmd: "&8&l\xbb&r &b/clan delbase &7Removes the Clan base."
+  base_cmd: "&8&l\xbb&r &b/clan base &7Teleports you to the Clan base."
 ahelp:
   commands: "&8&l\xbb&r &9&lCommands:&r"
   help_cmd: "&8&l\xbb&r &b/aclan help &7Show all admin commands."
@@ -112,3 +116,7 @@ admin:
     usage: '&7Correct usage: /aclan erase <clan>'
     no_exist: '&cThat clan doesn''t exist!'
     erased: '&7You''ve deleted the clan: &b%clan%&7!'
+base:
+  set: '&7You have set the Clan base to your location.'
+  unset: '&7You have removed the Clan base.'
+  no_base: '&cYou have been teleported to the Clan base.'
