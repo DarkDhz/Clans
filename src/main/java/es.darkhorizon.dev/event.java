@@ -48,32 +48,40 @@ public class event implements Listener {
 		String prefix = lfile.getString("global.prefix").replaceAll("&", "§");
 		if(event.getEntity() instanceof Player) {
 			Player victim = event.getEntity();
-			Player killer = victim.getKiller();
 			if (plugin.pclans.get(victim.getName().toString()) != null) {			
 				String clan_victim = plugin.pclans.get(victim.getPlayer().getName().toString());			
 				int ds = plugin.getConfig().getInt("clan." + clan_victim + ".deaths");
 				int kl = plugin.getConfig().getInt("clan." + clan_victim + ".kills");
+				if (ds == 0) {ds = 1;}
 				plugin.getConfig().set("clan." + clan_victim + ".deaths", ds+1 );
-				plugin.getConfig().set("clan." + clan_victim + ".kdr", kl/ds );
+				plugin.getConfig().set("clan." + clan_victim + ".kdr", (kl/ds));	
+				plugin.saveConfig();
+				plugin.reloadConfig();
 			}
-			if (plugin.pclans.get(killer.getName().toString()) != null) {
-				String clan_killer = plugin.pclans.get(killer.getPlayer().getName().toString());	
-				int ds = plugin.getConfig().getInt("clan." + clan_killer + ".deaths");
-				int kl = plugin.getConfig().getInt("clan." + clan_killer + ".kills");
-				plugin.getConfig().set("clan." + clan_killer + ".kills", kl+1 );
-				int exp = plugin.getConfig().getInt("clan." + clan_killer + ".exp");
-				int level = plugin.getConfig().getInt("clan." + clan_killer + ".level");
-				plugin.getConfig().set("clan." + clan_killer + ".exp", exp+1 );
-				plugin.getConfig().set("clan." + clan_killer + ".kdr", kl/ds );
-				if (exp >= 50*level) {
-					plugin.getConfig().set("clan." + clan_killer + ".level", level+1 );
-					plugin.getConfig().set("clan." + clan_killer + ".exp", 0 );
-					int sl = plugin.getConfig().getInt("clan." + clan_killer + ".slots");
-					plugin.getConfig().set("clan." + clan_killer + ".slots", sl+1 );	
-					String lvl = plugin.getConfig().getString("clan." + clan_killer + ".level");
-					Bukkit.broadcastMessage(prefix + lfile.getString("event.pvp.levelup").replaceAll("&", "§").replaceAll("%clan%", clan_killer).replaceAll("%level%", lvl));
+			if (victim.getKiller() instanceof Player) {
+				Player killer = victim.getKiller();
+				if (plugin.pclans.get(killer.getName().toString()) != null) {
+					String clan_killer = plugin.pclans.get(killer.getPlayer().getName().toString());	
+					int ds = plugin.getConfig().getInt("clan." + clan_killer + ".deaths");
+					if (ds == 0) {ds = 1;}
+					int kl = plugin.getConfig().getInt("clan." + clan_killer + ".kills");
+					plugin.getConfig().set("clan." + clan_killer + ".kills", kl+1 );
+					int exp = plugin.getConfig().getInt("clan." + clan_killer + ".exp");
+					int level = plugin.getConfig().getInt("clan." + clan_killer + ".level");
+					plugin.getConfig().set("clan." + clan_killer + ".exp", exp+1 );
+					plugin.getConfig().set("clan." + clan_killer + ".kdr", kl/ds );
+					if (exp >= 50*level) {
+						plugin.getConfig().set("clan." + clan_killer + ".level", level+1 );
+						plugin.getConfig().set("clan." + clan_killer + ".exp", 0 );
+						int sl = plugin.getConfig().getInt("clan." + clan_killer + ".slots");
+						plugin.getConfig().set("clan." + clan_killer + ".slots", sl+1 );	
+						String lvl = plugin.getConfig().getString("clan." + clan_killer + ".level");
+						Bukkit.broadcastMessage(prefix + lfile.getString("event.pvp.levelup").replaceAll("&", "§").replaceAll("%clan%", clan_killer).replaceAll("%level%", lvl));
+					}
+					plugin.saveConfig();
+					plugin.reloadConfig();
 				}
-			}			
+			}													
 		}
 	}
 	@EventHandler
