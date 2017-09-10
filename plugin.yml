@@ -1,6 +1,6 @@
 main: es.darkhorizon.dev.main
 name: Clans
-version: 2.1.1
+version: 2.1.2
 author: DarkDhz
 description: A simple Clans plugin.
 depend: [Vault]
