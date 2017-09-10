@@ -3,6 +3,7 @@ package es.darkhorizon.dev;
 import java.io.File;
 import java.util.ArrayList;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,8 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class clancmd implements CommandExecutor{
 	private final main plugin;
 	public clancmd(final main plugin) {
-		this.plugin = plugin;				
-	
+		this.plugin = plugin;					
 		new BukkitRunnable() {			
 			public void run() {	
 				for (OfflinePlayer p : Bukkit.getOfflinePlayers()) {						
@@ -32,11 +32,8 @@ public class clancmd implements CommandExecutor{
 				} 
 			}			  
 		}.runTaskTimer(plugin, 0L, 5 * 20L);		
-	}	
-	
-	
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
+	}			
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {	
 		File s = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "settings.yml");	
 		FileConfiguration sfile = YamlConfiguration.loadConfiguration(s);
 		File l = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "lang.yml");	
@@ -48,7 +45,7 @@ public class clancmd implements CommandExecutor{
 				sender.sendMessage(prefix + lfile.getString("global.only_players").replaceAll("&", "§"));
 			} else {
 				Player p = (Player) sender;
-				if (p.hasPermission("clan.user.use")) {																	
+				if (p.hasPermission("clan.user.use") | p.hasPermission("clan.user.*")) {																	
 				if(args.length == 0) {
 					p.sendMessage("");
 					p.sendMessage(lfile.getString("help.commands").replaceAll("&", "§"));
@@ -65,6 +62,9 @@ public class clancmd implements CommandExecutor{
 					p.sendMessage(lfile.getString("help.promote_cmd").replaceAll("&", "§"));
 					p.sendMessage(lfile.getString("help.demote_cmd").replaceAll("&", "§"));
 					p.sendMessage(lfile.getString("help.pvp_cmd").replaceAll("&", "§"));
+					if (plugin.getConfig().getBoolean("bases_enabled") == true) {p.sendMessage(lfile.getString("help.setbase_cmd").replaceAll("&", "§"));}
+					if (plugin.getConfig().getBoolean("bases_enabled") == true) {p.sendMessage(lfile.getString("help.delbase_cmd").replaceAll("&", "§"));}
+					if (plugin.getConfig().getBoolean("bases_enabled") == true) {p.sendMessage(lfile.getString("help.base_cmd").replaceAll("&", "§"));}
 					p.sendMessage("");			
 					p.sendMessage("§8§l»§r §fPlugin by: §9@DarkDhz");	
 					p.sendMessage("");	
@@ -72,7 +72,7 @@ public class clancmd implements CommandExecutor{
 					if(args[0].equalsIgnoreCase("help")) { p.performCommand("clan");	
 					
 					} else if(args[0].equalsIgnoreCase("create")) { 
-						if (p.hasPermission("clan.user.create")) {						
+						if (p.hasPermission("clan.user.create") | p.hasPermission("clan.user.*")) {						
 							if (args.length <= 1) { 
 								p.sendMessage(prefix + lfile.getString("create.usage").replaceAll("&", "§"));		
 							} else if (args.length > 2) { 
@@ -116,7 +116,7 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}
 							
 					} else if(args[0].equalsIgnoreCase("join")) { 
-						if (p.hasPermission("clan.user.join")) {
+						if (p.hasPermission("clan.user.join") | p.hasPermission("clan.user.*")) {
 							if(args.length == 1) { p.sendMessage(prefix + lfile.getString("join.usage").replaceAll("&", "§"));						
 							} else {
 								if (plugin.pclans.get(p.getName().toString()) == null) {
@@ -162,14 +162,14 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}
 					
 					} else if(args[0].equalsIgnoreCase("list")) { 
-						if (p.hasPermission("clan.user.list")) {
+						if (p.hasPermission("clan.user.list") | p.hasPermission("clan.user.*")) {
 							Inventory inventory = this.plugin.getInvMenus().openClanListInventory(p, 1);
 							p.openInventory(inventory); 
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}	
 						
 						
 					} else if (args[0].equalsIgnoreCase("invite")) {
-						if (p.hasPermission("clan.user.invite")) {
+						if (p.hasPermission("clan.user.invite") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								String clan = plugin.pclans.get(p.getName().toString());		
 								if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {		
@@ -201,7 +201,7 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}		
 						
 					} else if (args[0].equalsIgnoreCase("info")) {
-						if (p.hasPermission("clan.user.info")) {
+						if (p.hasPermission("clan.user.info") | p.hasPermission("clan.user.*")) {
 							if(args.length == 1) { p.sendMessage(prefix + lfile.getString("info.usage").replaceAll("&", "§")); 
 							} else {
 								Object clan = args[1].toUpperCase();
@@ -213,7 +213,7 @@ public class clancmd implements CommandExecutor{
 							}
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}												
 					} else if (args[0].equalsIgnoreCase("pvp")) {
-						if (p.hasPermission("clan.user.pvp")) {
+						if (p.hasPermission("clan.user.pvp") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								String clan = plugin.pclans.get(p.getName().toString());						
 								if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {	
@@ -233,7 +233,7 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}		
 						
 					} else if (args[0].equalsIgnoreCase("leave")) {
-						if (p.hasPermission("clan.user.leave")) {
+						if (p.hasPermission("clan.user.leave") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								String clan = plugin.pclans.get(p.getName().toString());		
 								if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {
@@ -267,7 +267,7 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}		
 						
 					} else if (args[0].equalsIgnoreCase("kick")) {
-						if (p.hasPermission("clan.user.kick")) {
+						if (p.hasPermission("clan.user.kick") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								String clan = plugin.pclans.get(p.getName().toString());		
 								if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {																
@@ -291,7 +291,7 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}	
 						
 					} else if (args[0].equalsIgnoreCase("promote")) {	
-						if (p.hasPermission("clan.user.promote")) {
+						if (p.hasPermission("clan.user.promote") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								String clan = plugin.pclans.get(p.getName().toString());		
 								if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {	
@@ -315,11 +315,11 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}	
 						
 					} else if (args[0].equalsIgnoreCase("demote")) {
-						if (p.hasPermission("clan.user.demote")) {
+						if (p.hasPermission("clan.user.demote") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								String clan = plugin.pclans.get(p.getName().toString());;
 								if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {	
-									if(args.length == 1) { p.sendMessage(prefix + lfile.getString("demote.usage").replaceAll("&", "§"));										
+									if (args.length == 1) { p.sendMessage(prefix + lfile.getString("demote.usage").replaceAll("&", "§"));										
 									} else {
 										Player target = Bukkit.getServer().getPlayer(args[1]);
 										if (plugin.pclans.get(target.getName().toString()).equals(clan)) {
@@ -338,7 +338,7 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}		
 						
 					} else if (args[0].equalsIgnoreCase("mode")) {	
-						if (p.hasPermission("clan.user.mode")) {
+						if (p.hasPermission("clan.user.mode") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								String clan = plugin.pclans.get(p.getName().toString());
 								if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {
@@ -358,7 +358,7 @@ public class clancmd implements CommandExecutor{
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}		
 													
 					} else if (args[0].equalsIgnoreCase("chat")) {
-						if (p.hasPermission("clan.user.chat")) {
+						if (p.hasPermission("clan.user.chat") | p.hasPermission("clan.user.*")) {
 							if (plugin.pclans.get(p.getName().toString()) != null) {
 								if (plugin.Chat.contains(p.getName().toString())) {
 									p.sendMessage(prefix + lfile.getString("chat.disabled").replaceAll("&", "§"));
@@ -373,8 +373,52 @@ public class clancmd implements CommandExecutor{
 								}
 							} else { p.sendMessage(prefix + lfile.getString("global.no_clan").replaceAll("&", "§")); }
 						} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}	
-								
-					} else { p.performCommand("clan"); } 
+					
+					} else if (args[0].equalsIgnoreCase("setbase")) {
+						if (plugin.getConfig().getBoolean("bases_enabled") == true) {
+							if (p.hasPermission("clan.user.setbase") | p.hasPermission("clan.user.*") ) {
+								if (plugin.pclans.get(p.getName().toString()) != null) {
+									String clan = plugin.pclans.get(p.getName().toString());		
+									if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {
+										plugin.getConfig().set("clan." + clan + ".base", p.getLocation());
+										p.sendMessage(prefix + lfile.getString("base.set").replaceAll("&", "§"));
+										plugin.saveConfig();
+										plugin.reloadConfig();	
+									} else { p.sendMessage(prefix + lfile.getString("global.owner").replaceAll("&", "§"));}																
+								} else { p.sendMessage(prefix + lfile.getString("global.no_clan").replaceAll("&", "§")); }
+							} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}			
+						} else {p.sendMessage(prefix + lfile.getString("global.disabled").replaceAll("&", "§"));}
+						
+					} else if (args[0].equalsIgnoreCase("delbase")) {
+						if (plugin.getConfig().getBoolean("bases_enabled") == true) {
+							if (p.hasPermission("clan.user.delbase") | p.hasPermission("clan.user.*") ) {
+								if (plugin.pclans.get(p.getName().toString()) != null) {
+									String clan = plugin.pclans.get(p.getName().toString());
+									if ((plugin.getConfig().get("clan." + clan + ".owner")).equals(p.getName())) {
+										if (plugin.getConfig().get("clan." + clan + ".base") != null) {
+											plugin.getConfig().set("clan." + clan + ".base", null);
+											p.sendMessage(prefix + lfile.getString("base.unset").replaceAll("&", "§"));
+											plugin.saveConfig();
+											plugin.reloadConfig();	
+										} else {p.sendMessage(prefix + lfile.getString("base.no_base").replaceAll("&", "§"));}
+									} else { p.sendMessage(prefix + lfile.getString("global.owner").replaceAll("&", "§"));}																		
+								} else { p.sendMessage(prefix + lfile.getString("global.no_clan").replaceAll("&", "§")); }
+							} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}					
+						} else {p.sendMessage(prefix + lfile.getString("global.disabled").replaceAll("&", "§"));}
+						
+					} else if (args[0].equalsIgnoreCase("base")) {
+						if (plugin.getConfig().getBoolean("bases_enabled") == true) {
+							if (p.hasPermission("clan.user.base") | p.hasPermission("clan.user.*") ) {
+								String clan = plugin.pclans.get(p.getName().toString());
+								if (plugin.pclans.get(p.getName().toString()) != null) {
+									if (plugin.getConfig().get("clan." + clan + ".base") != null) {
+										p.teleport((Location) plugin.getConfig().get("clan." + clan + ".base"));
+										p.sendMessage(prefix + lfile.getString("base.tp").replaceAll("&", "§"));	
+									} else {p.sendMessage(prefix + lfile.getString("base.no_base").replaceAll("&", "§"));}																
+								} else { p.sendMessage(prefix + lfile.getString("global.no_clan").replaceAll("&", "§")); }
+							} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}
+						} else {p.sendMessage(prefix + lfile.getString("global.disabled").replaceAll("&", "§"));}	
+					} else {p.performCommand("clan");} 
 				}
 				} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}
 			}		
