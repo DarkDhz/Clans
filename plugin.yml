@@ -1,6 +1,6 @@
 main: es.darkhorizon.dev.main
 name: Clans
-version: 2.1.2
+version: 2.2
 author: DarkDhz
 description: A simple Clans plugin.
 depend: [Vault]
@@ -33,6 +33,9 @@ permissions:
       clan.user.demote: true 
       clan.user.mode: true 
       clan.user.chat: true 
+      clan.user.setbase: true 
+      clan.user.delbase: true 
+      clan.user.base: true 
   clans.admin.use:
     default: op
   clan.admin.reload:
