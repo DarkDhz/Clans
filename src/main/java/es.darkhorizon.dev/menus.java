@@ -2,6 +2,7 @@ package es.darkhorizon.dev;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -68,15 +69,15 @@ public class menus {
 					
 				} else { cancel(); }			
 			}			  
-		}.runTaskTimer(plugin, 0L, 5 * 20L);
+		}.runTaskTimer(plugin, 0L, 5 * 20L); 
 		
 		return inv; 
 		
 	}
-	public Inventory openMemberInventory (final Player p, String clan) {
+	public Inventory openMemberInventory (final Player p, final String clan) {
 		File g = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "gui.yml");	
 		final FileConfiguration gfile = YamlConfiguration.loadConfiguration(g);
-		Inventory inv = Bukkit.createInventory(p, 9 * 6, gfile.getString("members.title").replaceAll("&", "§") + " §f§l»§r §c§l" + clan);
+		final Inventory inv = Bukkit.createInventory(p, 9 * 6, gfile.getString("members.title").replaceAll("&", "§") + " §f§l»§r §c§l" + clan);
 
 		final ArrayList<String> Lore = new ArrayList<String>();
 		ItemStack item = new ItemStack(Material.ARROW);
@@ -117,6 +118,7 @@ public class menus {
 		meta.setLore(Lore);
 		playerSkull.setItemMeta(meta);	
 		inv.setItem(4, playerSkull);
+		
 		inv.getItem(4).addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 		final ItemMeta skullMeta = playerSkull.getItemMeta();		
 		new BukkitRunnable() {			
@@ -131,6 +133,38 @@ public class menus {
 					skullMeta.setLore(Lore);
 					playerSkull.setItemMeta(skullMeta);
 					p.getOpenInventory().setItem(4, playerSkull);
+					for (String member : plugin.getConfig().getStringList("clan." + clan + ".list")) {
+						if (member != owner) {
+							HashMap<String, Integer> loop_int = new HashMap<String, Integer>();
+							if (loop_int.get(p.getName().toString()) != null) {loop_int.put(p.getName().toString(), 1+loop_int.get(p.getName().toString()));}
+							if (loop_int.get(p.getName().toString()) == null) {loop_int.put(p.getName().toString(), 18);}
+							if (loop_int.get(p.getName().toString()) <= 54) { 
+								ArrayList<String> Lores = new ArrayList<String>();
+								if (plugin.getConfig().getString("mod." + member) != null) {
+									ItemStack items = new ItemStack(Material.IRON_CHESTPLATE);
+									ItemMeta metas = items.getItemMeta();
+									metas.setDisplayName(gfile.getString("members.member.name").replaceAll("&", "§").replaceAll("%member%", member));
+									Lores.clear();
+									status = Bukkit.getServer().getOfflinePlayer(member).isOnline() ? gfile.getString("members.status.online").replaceAll("&", "§"):gfile.getString("members.status.offline").replaceAll("&", "§"); 
+									for ( String lr : gfile.getStringList("members.member.lore")) {Lores.add(lr.replaceAll("&", "§").replaceAll("%status%", status));}		
+									metas.setLore(Lores);
+									items.setItemMeta(metas);	
+									inv.setItem(loop_int.get(p.getName().toString()), items);
+								}
+								if (plugin.getConfig().getString("mod." + member) == null) {
+									ItemStack items = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+									ItemMeta metas = items.getItemMeta();
+									metas.setDisplayName(gfile.getString("members.member.name").replaceAll("&", "§").replaceAll("%member%", member));
+									Lores.clear();
+									status = Bukkit.getServer().getOfflinePlayer(member).isOnline() ? gfile.getString("members.status.online").replaceAll("&", "§"):gfile.getString("members.status.offline").replaceAll("&", "§"); 
+									for ( String lr : gfile.getStringList("members.member.lore")) {Lores.add(lr.replaceAll("&", "§").replaceAll("%status%", status));}		
+									metas.setLore(Lores);
+									items.setItemMeta(metas);	
+									inv.setItem(loop_int.get(p.getName().toString()), items);
+								}							
+							}
+						}			
+					}	
 				} else { cancel(); }			
 			}			  
 		}.runTaskTimer(plugin, 0L, 5 * 20L);
@@ -170,7 +204,7 @@ public class menus {
 			item.setItemMeta(meta);	
 			inv.setItem(45, item);
 		}
-			
+		
 		for (int i = 0; i < 45; i++) {
 			int size = clans.size();
 			if (i+(45*(pag-1)) < size) {	
@@ -205,6 +239,4 @@ public class menus {
         sm.setOwner(p.getName());	
 		return item;
 	}
-	
-	
 }
