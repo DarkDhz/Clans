@@ -88,7 +88,7 @@ public class main extends JavaPlugin implements Listener{
 		FileConfiguration ufile = YamlConfiguration.loadConfiguration(u);
 		
 		File lk = new File(Bukkit.getServer().getPluginManager().getPlugin("Clans").getDataFolder(), "link.yml");	
-		FileConfiguration lkfile = YamlConfiguration.loadConfiguration(u);
+		FileConfiguration lkfile = YamlConfiguration.loadConfiguration(lk);
 		
 		if (ufile.getString("version").equalsIgnoreCase(plversion)) {	
 			console.sendMessage("§8§l§m===========================================================================");
