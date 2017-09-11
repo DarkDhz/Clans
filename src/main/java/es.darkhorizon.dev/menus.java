@@ -39,7 +39,7 @@ public class menus {
 					meta.setLore(Lore);
 					playerSkull.setItemMeta(meta);	
 					inv.setItem(1, playerSkull);
-					inv.getItem(1).addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+					//inv.getItem(1).addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 					
 					//LVL
 					ItemStack item2 = new ItemStack(Material.EXP_BOTTLE);
@@ -52,7 +52,7 @@ public class menus {
 					meta2.setLore(Lore);
 					item2.setItemMeta(meta2);	
 					inv.setItem(4, item2);
-					inv.getItem(4).addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+					//inv.getItem(4).addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 					
 					//PVP
 					ItemStack item3 = new ItemStack(Material.DIAMOND_SWORD);
@@ -65,7 +65,7 @@ public class menus {
 					meta3.setLore(Lore);
 					item3.setItemMeta(meta3);	
 					inv.setItem(7, item3);
-					inv.getItem(7).addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+					//inv.getItem(7).addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 					
 				} else { cancel(); }			
 			}			  
