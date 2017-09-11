@@ -30,7 +30,7 @@ public class main extends JavaPlugin implements Listener{
 	ArrayList<String> Chat = new ArrayList<String>();
 	HashMap<String, String> pclans = new HashMap<String, String>();
 	HashMap<String, String> Invites = new HashMap<String, String>();
-	String plversion = "2.2.1";
+	String plversion = "2.2.2";
 	public static main getPlugin() {return plugin;}
 	@Override
 	public void onEnable() {
@@ -380,7 +380,7 @@ public class main extends JavaPlugin implements Listener{
 			if (lfile.getString("base.set") == null) {lfile.set("base.set", "&7You have set the Clan base to your location.");}
 			if (lfile.getString("base.unset") == null) {lfile.set("base.unset", "&7You have removed the Clan base.");}
 			if (lfile.getString("base.no_base") == null) {lfile.set("base.no_base", "&cThe Clan does not have base.");}
-			if (lfile.getString("base.tp") == null) {lfile.set("base.no_base", "&cYou have been teleported to the Clan base.");}
+			if (lfile.getString("base.tp") == null) {lfile.set("base.tp", "&cYou have been teleported to the Clan base.");}
 			lfile.save(l);
 		} catch (IOException exception) {exception.printStackTrace();}}
 		
