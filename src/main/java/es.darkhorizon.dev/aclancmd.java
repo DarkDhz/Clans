@@ -27,18 +27,20 @@ public class aclancmd implements CommandExecutor{
 			} else {
 				Player p = (Player) sender;
 				if (args.length == 0) {
-					p.sendMessage("");
-					p.sendMessage(lfile.getString("ahelp.commands").replaceAll("&", "§"));
-					p.sendMessage("");
-					p.sendMessage(lfile.getString("ahelp.help_cmd").replaceAll("&", "§")); 
-					p.sendMessage(lfile.getString("ahelp.slots_cmd").replaceAll("&", "§")); 
-					p.sendMessage(lfile.getString("ahelp.level_cmd").replaceAll("&", "§")); 
-					p.sendMessage(lfile.getString("ahelp.exp_cmd").replaceAll("&", "§")); 
-					p.sendMessage(lfile.getString("ahelp.erase_cmd").replaceAll("&", "§")); 
-					p.sendMessage(lfile.getString("ahelp.reload_cmd").replaceAll("&", "§"));
-					p.sendMessage("");			
-					p.sendMessage("§8§l»§r §fPlugin by: §9@DarkDhz");	
-					p.sendMessage("");
+					if (p.hasPermission("clans.admin.use")) {
+						p.sendMessage("");
+						p.sendMessage(lfile.getString("ahelp.commands").replaceAll("&", "§"));
+						p.sendMessage("");
+						p.sendMessage(lfile.getString("ahelp.help_cmd").replaceAll("&", "§")); 
+						p.sendMessage(lfile.getString("ahelp.slots_cmd").replaceAll("&", "§")); 
+						p.sendMessage(lfile.getString("ahelp.level_cmd").replaceAll("&", "§")); 
+						p.sendMessage(lfile.getString("ahelp.exp_cmd").replaceAll("&", "§")); 
+						p.sendMessage(lfile.getString("ahelp.erase_cmd").replaceAll("&", "§")); 
+						p.sendMessage(lfile.getString("ahelp.reload_cmd").replaceAll("&", "§"));
+						p.sendMessage("");			
+						p.sendMessage("§8§l»§r §fPlugin by: §9@DarkDhz");	
+						p.sendMessage("");
+					} else {p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§"));}					
 				} else {
 					if(args[0].equalsIgnoreCase("help")) {
 						p.performCommand("aclan");
@@ -58,14 +60,21 @@ public class aclancmd implements CommandExecutor{
 					
 					} else if (args[0].equalsIgnoreCase("slots")) {
 						if (p.hasPermission("clan.admin.slots")) {
-							String clan = args[1];
-							if (plugin.getConfig().getStringList("clanlist").contains(clan)) {
-								if (args[2].equalsIgnoreCase("default")) {
-									p.sendMessage(prefix + lfile.getString("admin.slots.default").replaceAll("&", "§").replaceAll("%clan%", clan)); 							
-									plugin.getConfig().set("clan." + clan + ".slots", (sfile.getInt("slots"))+(plugin.getConfig().getInt("clan." + clan + ".level"))-1);
-									plugin.saveConfig();
-									plugin.reloadConfig();
-								} else {
+							if (args.length == 1) {
+								p.sendMessage(prefix + lfile.getString("admin.slots.usage").replaceAll("&", "§"));
+							} else if (args.length <= 3) {
+								String clan = args[1];
+								if (plugin.getConfig().getStringList("clanlist").contains(clan)) {
+									if (args[2].equalsIgnoreCase("default")) {
+										p.sendMessage(prefix + lfile.getString("admin.slots.default").replaceAll("&", "§").replaceAll("%clan%", clan)); 							
+										plugin.getConfig().set("clan." + clan + ".slots", (sfile.getInt("slots"))+(plugin.getConfig().getInt("clan." + clan + ".level"))-1);
+										plugin.saveConfig();
+										plugin.reloadConfig();
+									} else {p.sendMessage(prefix + lfile.getString("admin.slots.usage").replaceAll("&", "§"));}							
+								} else {p.sendMessage(prefix + lfile.getString("admin.slots.no_exist").replaceAll("&", "§"));}																
+							} else if (args.length <= 4) {
+								String clan = args[1];
+								if (plugin.getConfig().getStringList("clanlist").contains(clan)) {										
 									try	{ 
 										int slots = Integer.parseInt(args[3]);
 										if (args[2].equalsIgnoreCase("set")) {
@@ -92,9 +101,10 @@ public class aclancmd implements CommandExecutor{
 												} else {p.sendMessage(prefix + lfile.getString("admin.slots.less_default").replaceAll("&", "§"));}			
 											} else {p.sendMessage(prefix + lfile.getString("global.negative").replaceAll("&", "§"));}
 										} else {p.sendMessage(prefix + lfile.getString("admin.slots.usage").replaceAll("&", "§"));}
-									} catch(NumberFormatException er) {p.sendMessage(prefix + lfile.getString("admin.slots.int").replaceAll("&", "§"));}
-								}																					
-							} else {p.sendMessage(prefix + lfile.getString("admin.slots.no_exist").replaceAll("&", "§"));}
+									} catch(NumberFormatException er) {p.sendMessage(prefix + lfile.getString("admin.slots.int").replaceAll("&", "§"));}																														
+																																							
+								} else {p.sendMessage(prefix + lfile.getString("admin.slots.no_exist").replaceAll("&", "§"));}							
+							} else {p.sendMessage(prefix + lfile.getString("admin.slots.less_default").replaceAll("&", "§"));}	
 						} else { p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§")); } 
 						
 					} else if (args[0].equalsIgnoreCase("level")) {
@@ -129,7 +139,7 @@ public class aclancmd implements CommandExecutor{
 								} else { p.sendMessage(prefix + lfile.getString("admin.erase.no_exist").replaceAll("&", "§")); }	
 							}
 						} else { p.sendMessage(prefix + lfile.getString("global.perms").replaceAll("&", "§")); } 												
-					} else { p.performCommand("aclan help"); }
+					} else { p.performCommand("aclan"); }
 				}
 			}
 		}
