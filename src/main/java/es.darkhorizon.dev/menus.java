@@ -90,8 +90,7 @@ public class menus {
 		meta.setLore(Lore);
 		item.setItemMeta(meta);	
 		inv.setItem(0, item);
-		
-		
+			
 		for (int i = 1; i < 18; i++) {
 			if (i != 4) {
 				item = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
